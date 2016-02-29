@@ -20,8 +20,11 @@
  urlstring  接口
  parameter  参数名
  fileData   上传的文件
- fileName   文件名
+ fileName   文件名（最好带上后缀名）
  dic        其他参数
+ 
+ 支持 avi bmp jpeg jpg png mp3 mp4 txt doc aac ppt pdf等格式
+ 不够用自行在上传类型中添加
 */
 
 @property (nonatomic, assign) id<uploadFileDelegate>delegate;
