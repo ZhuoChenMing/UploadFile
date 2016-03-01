@@ -20,11 +20,8 @@
  urlstring  接口
  parameter  参数名
  fileData   上传的文件
- fileName   文件名（最好带上后缀名）
+ fileName   文件名
  dic        其他参数
- 
- 支持 avi bmp jpeg jpg png mp3 mp4 txt doc aac ppt pdf等格式
- 不够用自行在上传类型中添加
 */
 
 @property (nonatomic, assign) id<uploadFileDelegate>delegate;
@@ -33,6 +30,20 @@
                       parameter:(NSString *)parameter
                        fileData:(NSData *)filedata
                        fileName:(NSString *)fileName
+                            dic:(NSDictionary *)dic;
+
+/*
+ urlstring  接口
+ parameterArray  参数名(NSString类型)数组
+ fileData   上传的文件(NSData类型)数组
+ fileName   文件名(NSString类型)数组
+ dic        其他参数
+ */
+
+- (void)uploadFileWithURLString:(NSString *)urlstring
+                 parameterArray:(NSArray *)parameterArray
+                  fileDataArray:(NSArray *)filedataArray
+                  fileNameArray:(NSArray *)fileNameArray
                             dic:(NSDictionary *)dic;
 
 @end
