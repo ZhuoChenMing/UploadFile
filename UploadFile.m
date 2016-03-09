@@ -76,13 +76,15 @@
     [request setHTTPMethod:@"POST"];
     
     //开线程下载
-    dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(defaultQueue, ^{
-        // 另开线程
-        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        
-        [self.delegate finisheWithData:returnData];
-    });
+    NSURLSessionConfiguration *conf = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *urlsessiont = [NSURLSession sessionWithConfiguration:conf];
+    __block UploadFile *weakself = self;
+    NSURLSessionDataTask *dataTask = [urlsessiont dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself.delegate finisheWithData:data];
+        });
+    }];
+    [dataTask resume];
 }
 
 - (void)uploadFileWithURLString:(NSString *)urlstring
@@ -148,14 +150,15 @@
     //http method
     [request setHTTPMethod:@"POST"];
     
-    //开线程下载
-    dispatch_queue_t defaultQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(defaultQueue, ^{
-        // 另开线程
-        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        
-        [self.delegate finisheWithData:returnData];
-    });
+    NSURLSessionConfiguration *conf = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *urlsessiont = [NSURLSession sessionWithConfiguration:conf];
+    __block UploadFile *weakself = self;
+    NSURLSessionDataTask *dataTask = [urlsessiont dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself.delegate finisheWithData:data];
+        });
+    }];
+    [dataTask resume];
 }
 
 - (NSMutableString *)setParamsKey:(NSString *)key value:(NSString *)value body:(NSMutableString *)body {
